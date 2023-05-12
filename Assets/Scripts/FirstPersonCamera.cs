@@ -4,32 +4,54 @@ using UnityEngine;
 
 public class FirstPersonCamera : MonoBehaviour {
     public Transform player;
+    public Rigidbody playerRB;
 
     public float minTurnAngle = -90.0f;
     public float maxTurnAngle = 90.0f;
+    private float rotationY;
     private float rotationX;
 
-    public float turnSpeed = 3.0f;
+    public float turnSpeedVertical = 3.0f;
+    public float turnSpeedHorizontal = 4.0f;
     public float moveSpeed = 2.0f;
 
-    bool lockCursor = true;
+    private Vector3 movement;
+    private float horizontalMovement;
+    private float verticalMovement;
+
+    public bool lockCursor = true;
 
     void Start() {
         // lock and hide cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        if (lockCursor) {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     void Update() {
-        Aim();
+        PlayerInput();
+    }
+
+    void FixedUpdate() {
         Move();
+        Aim();
+    }
+
+    void PlayerInput() {
+        // mouse input
+        rotationY = Input.GetAxis("Mouse X") * turnSpeedHorizontal;
+        rotationX += Input.GetAxis("Mouse Y") * turnSpeedVertical;
+        
+        // keyboard input - unity uses y as height axis, x,z for ground movement
+        horizontalMovement = Input.GetAxis("Horizontal");
+        verticalMovement = Input.GetAxis("Vertical");
+
+        // by multiplying by player.forward and player.right, we get rotation dependent movement
+        movement = player.forward * verticalMovement + player.right * horizontalMovement;
     }
 
     void Aim() {
-        // mouse input
-        float y = Input.GetAxis("Mouse X") * turnSpeed;
-        rotationX += Input.GetAxis("Mouse Y") * turnSpeed;
-
         // ensure we cannot rotate too far up or down
         rotationX = Mathf.Clamp(rotationX, minTurnAngle, maxTurnAngle);
 
@@ -37,17 +59,21 @@ public class FirstPersonCamera : MonoBehaviour {
         transform.localEulerAngles = Vector3.right * -rotationX;
 
         // rotate player (and camera) around Y axis
-        player.Rotate(Vector3.up * y);
+        playerRB.MoveRotation(playerRB.rotation * Quaternion.Euler(Vector3.up * rotationY));
     }
 
     void Move() {
-        Vector3 dir = new Vector3(0, 0, 0);
-
-        // unity uses y as height axis, x,z for ground movement
-        dir.x = Input.GetAxis("Horizontal");
-        dir.z = Input.GetAxis("Vertical");
-
-        // moves rotation dependent
-        player.transform.Translate(dir * moveSpeed * Time.deltaTime);
+        // !!!!!!! SWITCH TO ADD FORCE MAYBE? IDK GRAVITY NOT WORKING
+        playerRB.MovePosition(player.position + movement * Time.deltaTime * moveSpeed);
     }
+
+    // void Jump() {
+    //     //grounded detection
+        
+
+    //     //jump input
+    //     if (Input.GetButton("Jump")) {
+    //         playerRB.
+    //     }
+    // }
 }
