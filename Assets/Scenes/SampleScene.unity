@@ -260,8 +260,7 @@ MonoBehaviour:
   maxTurnAngle: 90
   turnSpeedVertical: 3
   turnSpeedHorizontal: 4
-  moveSpeed: 2
-  lockCursor: 0
+  lockCursor: 1
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +438,7 @@ GameObject:
   - component: {fileID: 1503886023}
   - component: {fileID: 1503886022}
   - component: {fileID: 1503886026}
+  - component: {fileID: 1503886027}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -538,10 +538,23 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 1
+--- !u!114 &1503886027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503886021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5ba4966231df54b9e676e692dd0e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
 --- !u!1 &2015591954
 GameObject:
   m_ObjectHideFlags: 0

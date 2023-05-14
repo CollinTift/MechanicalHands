@@ -13,12 +13,7 @@ public class FirstPersonCamera : MonoBehaviour {
 
     public float turnSpeedVertical = 3.0f;
     public float turnSpeedHorizontal = 4.0f;
-    public float moveSpeed = 2.0f;
-
-    private Vector3 movement;
-    private float horizontalMovement;
-    private float verticalMovement;
-
+    
     public bool lockCursor = true;
 
     void Start() {
@@ -30,25 +25,17 @@ public class FirstPersonCamera : MonoBehaviour {
     }
 
     void Update() {
-        PlayerInput();
+        MouseInput();
     }
 
     void FixedUpdate() {
-        Move();
         Aim();
     }
 
-    void PlayerInput() {
+    void MouseInput() {
         // mouse input
         rotationY = Input.GetAxis("Mouse X") * turnSpeedHorizontal;
         rotationX += Input.GetAxis("Mouse Y") * turnSpeedVertical;
-        
-        // keyboard input - unity uses y as height axis, x,z for ground movement
-        horizontalMovement = Input.GetAxis("Horizontal");
-        verticalMovement = Input.GetAxis("Vertical");
-
-        // by multiplying by player.forward and player.right, we get rotation dependent movement
-        movement = player.forward * verticalMovement + player.right * horizontalMovement;
     }
 
     void Aim() {
@@ -60,11 +47,6 @@ public class FirstPersonCamera : MonoBehaviour {
 
         // rotate player (and camera) around Y axis
         playerRB.MoveRotation(playerRB.rotation * Quaternion.Euler(Vector3.up * rotationY));
-    }
-
-    void Move() {
-        // !!!!!!! SWITCH TO ADD FORCE MAYBE? IDK GRAVITY NOT WORKING
-        playerRB.MovePosition(player.position + movement * Time.deltaTime * moveSpeed);
     }
 
     // void Jump() {
