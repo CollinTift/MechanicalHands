@@ -13,7 +13,7 @@ public class FirstPersonCamera : MonoBehaviour {
 
     public float turnSpeedVertical = 3.0f;
     public float turnSpeedHorizontal = 4.0f;
-    
+
     public bool lockCursor = true;
 
     void Start() {
@@ -48,14 +48,4 @@ public class FirstPersonCamera : MonoBehaviour {
         // rotate player (and camera) around Y axis
         playerRB.MoveRotation(playerRB.rotation * Quaternion.Euler(Vector3.up * rotationY));
     }
-
-    // void Jump() {
-    //     //grounded detection
-        
-
-    //     //jump input
-    //     if (Input.GetButton("Jump")) {
-    //         playerRB.
-    //     }
-    // }
 }
