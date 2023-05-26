@@ -63,7 +63,7 @@ public class CharacterController : MonoBehaviour {
             jumpTime = 0;
         }
         
-        //counting total time jump is held on current jump input, and measuring whether it ends early or at max time
+        // counting total time jump is held on current jump input, and measuring whether it ends early or at max time
         if (jump) {
             jumpTime += Time.deltaTime;
             if (Input.GetButtonUp("Jump")) jumpCancelled = true;
