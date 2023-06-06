@@ -5,17 +5,25 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
     public float damage = 1f;
 
-    // time in seconds before projectile despawns
-    public float projectileTime = 3f;
+    // projectile timing before despawn
+    public float projectileTime = 3f; // time in seconds before projectile despawns
+    private float projectileLifespan; 
 
     // force applied to projectile at spawn
     public float projectileSpeed = 10f;
 
-    // list of projectile types, maybe use static enumerator to spawn based on type?
-    public static Projectile playerProj;
-    public static Projectile enemyProj;
+    private void Start() {
+        projectileLifespan = 0f;
+    }
 
     private void Update() {
-        
+        DoProjectileLifespan();
+    }
+
+    private void DoProjectileLifespan() {
+        projectileLifespan += Time.deltaTime;
+        if (projectileLifespan >= projectileTime) {
+            Destroy(gameObject);
+        }
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour {
     Rigidbody playerRB;
 
+    private Health health;
+
     [Header("Movement")]
     public float moveSpeed = 2.0f;
 
@@ -25,14 +27,19 @@ public class CharacterController : MonoBehaviour {
     public float groundCheckRadius = .3f;
     public LayerMask groundLayer;
 
+    public GameObject playerProj;
+    public Transform projectileSpawner;
+
     void Start() {
         playerRB = GetComponent<Rigidbody>();
+        health = GetComponent<Health>();
     }
 
     void Update() {
         KeyInput();
         CheckGrounded();
         Jump();
+        Shoot();
     }
 
     void FixedUpdate() {
@@ -80,6 +87,23 @@ public class CharacterController : MonoBehaviour {
         // if jump dropped early, apply fall force
         if (jumpCancelled && jump && playerRB.velocity.y > 0) {
             playerRB.AddForce(Vector3.down * fallRate);
+        }
+    }
+
+    void Shoot() {
+        if (Input.GetButtonDown("Fire1")) {
+            GameObject proj = Instantiate(playerProj, projectileSpawner.position, projectileSpawner.rotation);
+            proj.GetComponent<Rigidbody>().AddForce(projectileSpawner.TransformDirection(0f, 0f, proj.GetComponent<Projectile>().projectileSpeed), ForceMode.Impulse);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        // if an enemy projectile hits player
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyProj")) {
+            // player takes damage equal to projectile's damage
+            Debug.Log(gameObject.name + " has taken Damage: " + other.gameObject.GetComponent<Projectile>().damage);
+            health.TakeDamage(other.gameObject.GetComponent<Projectile>().damage);
+            Destroy(other.gameObject);
         }
     }
 }

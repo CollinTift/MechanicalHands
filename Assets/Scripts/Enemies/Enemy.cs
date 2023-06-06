@@ -13,7 +13,9 @@ public class Enemy : MonoBehaviour {
         // if a player projectile hits this enemy
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerProj")) {
             // this enemy takes damage equal to projectile's damage
+            Debug.Log(gameObject.name + " has taken Damage: " + other.gameObject.GetComponent<Projectile>().damage);
             health.TakeDamage(other.gameObject.GetComponent<Projectile>().damage);
+            Destroy(other.gameObject);
         }
     }
 }
