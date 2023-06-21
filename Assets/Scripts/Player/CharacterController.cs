@@ -29,6 +29,7 @@ public class CharacterController : MonoBehaviour {
 
     public GameObject playerProj;
     public Transform projectileSpawner;
+    public Transform projectileParent;
 
     void Start() {
         playerRB = GetComponent<Rigidbody>();
@@ -92,7 +93,7 @@ public class CharacterController : MonoBehaviour {
 
     void Shoot() {
         if (Input.GetButtonDown("Fire1")) {
-            GameObject proj = Instantiate(playerProj, projectileSpawner.position, projectileSpawner.rotation);
+            GameObject proj = Instantiate(playerProj, projectileSpawner.position, projectileSpawner.rotation, projectileParent);
             proj.GetComponent<Rigidbody>().AddForce(projectileSpawner.TransformDirection(0f, 0f, proj.GetComponent<Projectile>().projectileSpeed), ForceMode.Impulse);
         }
     }

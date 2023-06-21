@@ -624,6 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 0
 --- !u!114 &2104231791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +768,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2478464612826316674, guid: 9d5ee56e08725934f8d838700dc2213f,
+        type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 1092816816}
     - target: {fileID: 2478464612826316684, guid: 9d5ee56e08725934f8d838700dc2213f,
         type: 3}
       propertyPath: m_Name
